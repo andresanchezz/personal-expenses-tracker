@@ -1,3 +1,4 @@
+
 export interface BankAccount {
   id: string;
   user_id: string;
@@ -7,6 +8,7 @@ export interface BankAccount {
   interest_rate: number;
   interest_payment_frequency: 'daily' | 'monthly' | null;
   is_active: boolean;
+  total_interest_generated: number; // ← NUEVO
   created_at: string;
   updated_at: string;
 }

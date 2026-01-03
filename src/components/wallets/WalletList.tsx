@@ -3,18 +3,20 @@ import { Plus, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import WalletCard from '@/components/cards/WalletCard';
-
-import { useWallets, usePocketsCounts } from '@/lib/api/wallets';
-import { BankAccount } from '@/types/database';
 import CreateWalletDialog from './CreateWalletDialog';
 import EditWalletDialog from './EditWalletDialog';
 import DeleteWalletDialog from './DeleteWalletDialog';
+
+import { useWallets, usePocketsCounts } from '@/lib/api/wallets';
+import { BankAccount } from '@/types/database';
+import PocketsView from '../pockets/PocketView';
 import { formatCurrency } from '@/lib/utils';
 
 const WalletsList = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingWallet, setEditingWallet] = useState<BankAccount | null>(null);
   const [deletingWallet, setDeletingWallet] = useState<BankAccount | null>(null);
+  const [viewingPockets, setViewingPockets] = useState<BankAccount | null>(null);
 
   const { data: wallets, isLoading: walletsLoading } = useWallets();
   const { data: pocketsCounts } = usePocketsCounts();
@@ -22,6 +24,16 @@ const WalletsList = () => {
   // Calcular totales
   const totalBalance = wallets?.reduce((sum, w) => sum + w.balance_total, 0) || 0;
   const walletsCount = wallets?.length || 0;
+
+  // Si estamos viendo bolsillos, mostrar esa vista
+  if (viewingPockets) {
+    return (
+      <PocketsView
+        wallet={viewingPockets}
+        onBack={() => setViewingPockets(null)}
+      />
+    );
+  }
 
   if (walletsLoading) {
     return (
@@ -55,8 +67,8 @@ const WalletsList = () => {
       </div>
 
       {/* Total Balance Card */}
-      <div className="rounded-lg border bg-card p-6 shadow-sm text-muted-foreground">
-        <p className="text-sm">Balance Total</p>
+      <div className="rounded-lg border bg-card p-6 shadow-sm">
+        <p className="text-sm text-muted-foreground">Balance Total</p>
         <p className="text-3xl font-bold">{formatCurrency(totalBalance)}</p>
       </div>
 
@@ -70,10 +82,7 @@ const WalletsList = () => {
               pocketsCount={pocketsCounts?.[wallet.id] || 0}
               onEdit={() => setEditingWallet(wallet)}
               onDelete={() => setDeletingWallet(wallet)}
-              onViewPockets={() => {
-                // TODO: Implementar vista de bolsillos
-                console.log('Ver bolsillos de:', wallet.name);
-              }}
+              onViewPockets={() => setViewingPockets(wallet)}
             />
           ))}
         </div>
@@ -92,7 +101,7 @@ const WalletsList = () => {
       )}
 
       {/* Dialogs */}
-      <CreateWalletDialog
+      <CreateWalletDialog 
         open={isCreateOpen} 
         onOpenChange={setIsCreateOpen} 
       />
