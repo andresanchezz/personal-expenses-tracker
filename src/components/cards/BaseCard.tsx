@@ -19,6 +19,8 @@ interface BaseCardProps {
   // Credit card specific
   cashbackPercentage?: number;
   totalCashbackGenerated?: number;
+  onPay?: () => void;
+  onTransferCashback?: () => void;
 }
 
 const BaseCard: React.FC<BaseCardProps> = ({
@@ -33,6 +35,8 @@ const BaseCard: React.FC<BaseCardProps> = ({
   onViewPockets,
   cashbackPercentage,
   totalCashbackGenerated,
+  onPay,
+  onTransferCashback,
 }) => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -84,9 +88,9 @@ const BaseCard: React.FC<BaseCardProps> = ({
         {isWallet ? (
           // Wallet info
           <>
-            {interestRate !== undefined && interestRate > 0 ? 
-              <p>{interestRate}% E.A</p> : <p>No genera interés</p>
-            }
+            {interestRate !== undefined && interestRate > 0 && (
+              <p>{interestRate}% E.A</p>
+            )}
             {pocketsCount !== undefined && (
               <p>{pocketsCount} {pocketsCount === 1 ? 'Bolsillo' : 'Bolsillos'}</p>
             )}
@@ -114,6 +118,32 @@ const BaseCard: React.FC<BaseCardProps> = ({
         >
           Ver bolsillos
         </Button>
+      )}
+
+      {/* Botones para tarjetas de crédito */}
+      {!isWallet && (
+        <div className="mt-4 flex gap-2">
+          {onPay && (
+            <Button
+              variant="secondary"
+              size="sm"
+              className="flex-1 bg-white/20 text-white hover:bg-white/30"
+              onClick={onPay}
+            >
+              Pagar
+            </Button>
+          )}
+          {onTransferCashback && (
+            <Button
+              variant="secondary"
+              size="sm"
+              className="flex-1 bg-white/20 text-white hover:bg-white/30"
+              onClick={onTransferCashback}
+            >
+              Cashback
+            </Button>
+          )}
+        </div>
       )}
     </div>
   );

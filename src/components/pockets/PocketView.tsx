@@ -88,7 +88,7 @@ const PocketsView: React.FC<PocketsViewProps> = ({ wallet, onBack }) => {
         <Button variant="ghost" size="icon" onClick={onBack}>
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h2 className="text-2xl font-bold">{wallet.name}</h2>
+        <h2 className="md:text-2xl font-bold">{wallet.name}</h2>
       </div>
 
       {/* Card de resumen */}

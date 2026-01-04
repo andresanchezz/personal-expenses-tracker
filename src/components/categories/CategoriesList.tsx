@@ -49,9 +49,9 @@ const CategoriesList = () => {
   const totalParents = grouped.parents.length;
   const totalChildren = categories?.filter(c => c.type === 'child').length || 0;
 
-  const CategoryChip = ({ category, onEdit, onDelete }: { 
-    category: Category; 
-    onEdit: () => void; 
+  const CategoryChip = ({ category, onEdit, onDelete }: {
+    category: Category;
+    onEdit: () => void;
     onDelete: () => void;
   }) => (
     <Badge
@@ -81,8 +81,8 @@ const CategoriesList = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Tag className="h-6 w-6" />
-          <h2 className="text-2xl font-bold">Categorías ({totalCategories})</h2>
+          <Tag className="h-5 w-5" />
+          <h2 className="md:text-2xl font-bold">Categorías ({totalCategories})</h2>
         </div>
         <Button onClick={() => setIsCreateOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />

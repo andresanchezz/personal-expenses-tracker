@@ -57,8 +57,8 @@ const WalletsList = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Wallet className="h-6 w-6" />
-          <h2 className="text-2xl font-bold">Billeteras ({walletsCount})</h2>
+          <Wallet className="h-5 w-5" />
+          <h2 className="md:text-2xl font-bold">Billeteras ({walletsCount})</h2>
         </div>
         <Button onClick={() => setIsCreateOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
@@ -101,11 +101,11 @@ const WalletsList = () => {
       )}
 
       {/* Dialogs */}
-      <CreateWalletDialog 
-        open={isCreateOpen} 
-        onOpenChange={setIsCreateOpen} 
+      <CreateWalletDialog
+        open={isCreateOpen}
+        onOpenChange={setIsCreateOpen}
       />
-      
+
       {editingWallet && (
         <EditWalletDialog
           wallet={editingWallet}
@@ -113,7 +113,7 @@ const WalletsList = () => {
           onOpenChange={(open) => !open && setEditingWallet(null)}
         />
       )}
-      
+
       {deletingWallet && (
         <DeleteWalletDialog
           wallet={deletingWallet}
