@@ -1,3 +1,4 @@
+import CategoriesList from '@/components/categories/CategoriesList';
 import { AuthGuard } from '@/components/guards/AuthGuard';
 import { Button } from '@/components/ui/button';
 import WalletsList from '@/components/wallets/WalletList';
@@ -21,6 +22,11 @@ export default function DashboardPage() {
         {/* Sección de Billeteras */}
         <section className="mb-12">
           <WalletsList />
+        </section>
+
+        {/* Sección de Categorias */}
+        <section className="mb-12">
+          <CategoriesList />
         </section>
 
         {/* TODO: Próximas secciones */}
